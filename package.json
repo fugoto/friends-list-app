@@ -7,7 +7,7 @@
     "postinstall": "webpack",
     "start:dev": "npm run start-server & npm run build-watch",
     "start-server": "nodemon server",
-    "build-watch": "webpack -w",
+    "build-watch": "webpack",
     "start": "npm run start:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
