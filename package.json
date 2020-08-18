@@ -7,7 +7,7 @@
     "postinstall": "webpack",
     "start:dev": "npm run start-server & npm run build-watch",
     "start-server": "nodemon server",
-    "build-watch": "webpack",
+    "build-watch": "webpack -w",
     "start": "npm run start:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,9 +31,10 @@
     "pg": "^8.3.0",
     "sequelize": "^6.3.4",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "nodemon": "^2.0.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    
   }
 }
