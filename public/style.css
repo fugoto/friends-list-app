@@ -1,0 +1,20 @@
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.friendName {
+    font-weight: bold
+}
+
+#error {
+    color: red
+}
+
+#list {
+    line-height: 2
+}
+
+.rating {
+    margin-right: 6px
+
+}
