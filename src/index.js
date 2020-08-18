@@ -52,26 +52,35 @@ async function updateFriends (){
 }
 
 updateFriends()
-
+//what is :id trying to do here? is it an issue that PUT and DELETE returns a 404?
 document.getElementById('create').addEventListener('click', async function(){
     try{
         let newFriend = document.getElementById('new-friend').value
         if (!newFriend) document.getElementById('error').innerHTML = 'Validation Error: Validation notEmpty on name failed'
         else{
-            await fetch(`/api/friends/${newFriend}`,{
-                method: 'PUT'
-                }
+            // await fetch(`/api/friends/${newFriend}`,{
+            //     method: 'PUT'
+            //     }
+            await fetch('/api/friends/:id',{
+                method: 'PUT',
+                body: JSON.stringify( {newFriend} ),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                redirect: 'follow'
+            }
             ).then(response => {
-                console.log(response.type)
-                if(!response.ok || response.type !== 'opaque') {
+                if(response.redirected) window.location.href = response.url                    
+                else if(!response.ok) {
                     document.getElementById('error').innerHTML = 'Validation Error'
                     }
                     return response
-            }).then(response => {
-                if(response.redirected) {
-                window.location.href = response.url
-                }
             })
+            // .then(response => {
+            //     if(response.redirected) {
+            //     window.location.href = response.url
+            //     }
+            // })
             }
         } catch(error){ 
         console.error(error)
@@ -126,9 +135,16 @@ function delButtonClick(delButton){
     delButton.addEventListener('click', async function(event){
         try{
             const deleted = event.target.parentNode.id
-            const result =  await fetch(`/api/friends/${deleted}`,{
+            // const result =  await fetch(`/api/friends/${deleted}`,{
+            //     method: 'DELETE',
+            //     redirect: 'follow'
+            await fetch(`/api/friends/:id`,{
                 method: 'DELETE',
-                redirect: 'follow'
+                redirect: 'follow',
+                body: JSON.stringify( {deleted} ),
+                headers: {
+                    "Content-Type": "application/json"
+                },
             }).then(response => {
                 if(response.redirected) {
                 window.location.href = response.url

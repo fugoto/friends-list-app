@@ -38,8 +38,8 @@ router.get('/api/friends', async(req,res,next) => {
 
 router.put('/api/friends/:id',async(req,res,next) => {
     try{
-        const newFriend = req.params.id
-        //do a unique test where if findOne where newFriend is true then a new page is not created
+        // const newFriend = req.params.id
+        const newFriend = req.body.newFriend
         const newFriendData = await Friends.create({ name: newFriend })
         // res.json(newFriendData)
         res.redirect('/')
@@ -67,7 +67,8 @@ router.post('/api/friends',async(req,res,next) => {
 
 router.delete('/api/friends/:id',async (req,res,next) => {
     try{
-        const deleted = req.params.id
+        // const deleted = req.params.id
+        const deleted = req.body.deleted
         await Friends.destroy({
             where: {
                 name: deleted
