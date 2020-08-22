@@ -1,20 +1,25 @@
-const express = require('express')
+const express = require("express")
 const app = express()
-const morgan = require('morgan')
-const { db, Friends } = require('./db')
-const routes = require('./app')
-const path = require('path')
+const morgan = require("morgan")
+//[PK] Why import Friends if you don't use it?
+const { db, Friends } = require("./db")
+const routes = require("./app")
+const path = require("path")
 
-app.use(morgan('dev'))
+app.use(morgan("dev"))
 app.use(express.json())
-app.use(express.urlencoded( {extended: false} ))
-app.use(require('method-override')('_method'))
-app.use(express.static(path.join(__dirname,'./public')))
+//[PK] Maybe subjective but { key: value } >> {key: value}
+app.use(express.urlencoded({ extended: false }))
+app.use(require("method-override")("_method"))
+app.use(express.static(path.join(__dirname, "./public")))
 
 // connect to routes
-app.use('/',routes)
-app.use('/api',routes)
+//[PK] More formatting: func(arg, arg) >> func(arg,arg)
+app.use("/", routes)
+//[PK] Why have two ways to get to the same routes?
+app.use("/api", routes)
 
+//[PK] Delete these comments!!
 // app.use(function(req,res,next){
 //     const err = new Error('Not found')
 //     err.status = 404
@@ -28,16 +33,17 @@ app.use('/api',routes)
 // })
 
 async function init() {
-    try {
-        await db.sync()
+	try {
+		await db.sync()
 
-        const PORT = process.env.PORT || 3000
-        await app.listen(PORT, function(){
-            console.log(`Listening at http://localhost:${PORT}`);
-        })
-     } catch(error) {
-            console.error(error)
-        }
-    }
+		const PORT = process.env.PORT || 3000
+		//[PK] app.listen does not return a promise, so `await` doesn't do anything!
+		await app.listen(PORT, function () {
+			console.log(`Listening at http://localhost:${PORT}`)
+		})
+	} catch (error) {
+		console.error(error)
+	}
+}
 
-    init()
+init()
